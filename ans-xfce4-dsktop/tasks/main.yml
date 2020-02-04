@@ -1,0 +1,17 @@
+- name: include variables ubuntu
+  include_vars: Ubuntu.yml
+  when: ansible_distribution == "Ubuntu"
+
+- name: install xfce4 mini pkg
+  apt: name="{{ item }}" state="present"
+  with_items: 
+    - "{{ xfce4_packages }}"
+    - "{{ xfce4_login_manager_package }}"
+
+- name: install xfce4 extra pkg
+  apt: name="{{ item }}" state="present"
+  with_items: 
+    - "{{ xfce4_extra_packages }}"
+
+- name: relance unit login manager
+  service: name="{{ xfce4_login_manager_service }}" state="restarted"

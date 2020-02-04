@@ -1,0 +1,25 @@
+---
+
+- name: Tester nginx puis restart
+  command: nginx -t
+  when: nginx_install_service
+  notify:
+    - 'Restart nginx'
+
+- name: Tester nginx puis reload
+  command: nginx -t
+  when: nginx_install_service
+  notify:
+    - 'Reload nginx'
+
+- name: Restart du unit
+  service:
+    name: 'nginx'
+    state: 'restarted'
+  when: nginx_install_service
+
+- name: Reload des units
+  service:
+    name: 'nginx'
+    state: 'reloaded'
+  when: nginx_install_service
